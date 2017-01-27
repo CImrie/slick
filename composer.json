@@ -1,0 +1,29 @@
+{
+    "name": "cimrie/slick",
+    "description": "Fluent ODM Metadata Builder for cimrie/odm, the FW Integration package for Doctrine MongoDB ODM.",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Connor Imrie",
+            "email": "connorimrie@outlook.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "CImrie\\Slick\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests"
+        }
+    },
+    "require": {
+        "cimrie/odm": "~0.1"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^5.7",
+        "laravel/laravel": "~5.3"
+    }
+}
