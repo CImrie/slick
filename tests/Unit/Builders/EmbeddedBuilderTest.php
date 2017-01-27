@@ -29,7 +29,7 @@ class EmbeddedBuilderTest extends TestCase
     /**
      * @test
      */
-    public function test_can_embed_one_document()
+    public function can_embed_one_document()
     {
         $this->builder
             ->one(User::class)
@@ -43,5 +43,16 @@ class EmbeddedBuilderTest extends TestCase
         $this->assertEquals('type', $this->metadata()->fieldMappings['user']['discriminatorField']);
         $this->assertEquals(['user' => User::class], $this->metadata()->fieldMappings['user']['discriminatorMap']);
         $this->assertEquals('test', $this->metadata()->fieldMappings['user']['defaultDiscriminatorValue']);
+    }
+
+    /**
+     * @test
+     */
+    public function can_embed_many_documents()
+    {
+        $this->builder->many(User::class)
+            ->field('users');
+
+        $this->assertEquals(User::class, $this->metadata()->fieldMappings['users']['targetDocument']);
     }
 }

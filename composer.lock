@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "500edf526650cc1e8357f6fb269b2add",
+    "hash": "64c2a517b5704c659ac587aa2158587c",
     "content-hash": "cc0aa023ceff3523fb5c4d75e1ffeeb5",
     "packages": [
         {
@@ -112,16 +112,16 @@
         },
         {
             "name": "cimrie/odm",
-            "version": "v0.1.2",
+            "version": "v0.1.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/CImrie/odm.git",
-                "reference": "06081e0f0c8c0f153ce5a47a7f47f46a7f9768a5"
+                "reference": "d96bd057b9cedb913ff81e640e362ed2470e07eb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/CImrie/odm/zipball/06081e0f0c8c0f153ce5a47a7f47f46a7f9768a5",
-                "reference": "06081e0f0c8c0f153ce5a47a7f47f46a7f9768a5",
+                "url": "https://api.github.com/repos/CImrie/odm/zipball/d96bd057b9cedb913ff81e640e362ed2470e07eb",
+                "reference": "d96bd057b9cedb913ff81e640e362ed2470e07eb",
                 "shasum": ""
             },
             "require": {
@@ -165,7 +165,7 @@
                 "mongodb",
                 "odm"
             ],
-            "time": "2017-01-27 07:23:33"
+            "time": "2017-01-27 17:13:26"
         },
         {
             "name": "classpreloader/classpreloader",

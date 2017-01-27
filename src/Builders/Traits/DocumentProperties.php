@@ -98,4 +98,11 @@ trait DocumentProperties
 
         return $this;
     }
+
+    public function repository($repositoryClass)
+    {
+        $this->metadataBuilder->setCustomRepository($repositoryClass);
+
+        return $this;
+    }
 }

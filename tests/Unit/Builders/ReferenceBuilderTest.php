@@ -52,7 +52,7 @@ class ReferenceBuilderTest extends TestCase
         $this->assertEquals('user', $this->metadata()->fieldMappings['name']['mappedBy']);
         $this->assertTrue($this->metadata()->fieldMappings['name']['orphanRemoval']);
         $this->assertEquals('test', $this->metadata()->fieldMappings['name']['repositoryMethod']);
-//        $this->assertEquals(['all'], $this->metadata()->fieldMappings['name']['cascade']);
+        $this->assertEquals(['all'], $this->metadata()->fieldMappings['name']['cascade']);
 
         $reference
             ->mappedBy(null)

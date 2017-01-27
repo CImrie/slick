@@ -9,6 +9,7 @@ use CImrie\ODM\Mapping\Index;
 use CImrie\ODM\Mapping\Indexes;
 use CImrie\Slick\DocumentBuilder;
 use CImrie\Slick\Builders\AbstractBuilder;
+use Doctrine\ODM\MongoDB\DocumentRepository;
 use Doctrine\ODM\MongoDB\Mapping\ClassMetadata;
 use Tests\Model\Documents\User;
 use Tests\TestCase;
@@ -207,9 +208,22 @@ class DocumentBuilderTest extends TestCase
         $this->assertCount(1, $this->metadata()->getLifecycleCallbacks('postPersist'));
         $this->assertEquals('method', $this->metadata()->getLifecycleCallbacks('postPersist')[0]);
     }
+
+    /**
+     * @test
+     */
+    public function can_set_custom_repository_class()
+    {
+        $this->builder->repository(CustomRepo::class);
+        $this->assertEquals(CustomRepo::class, $this->metadata()->customRepositoryClassName);
+    }
 }
 
 class ExampleDocumentListener
 {
+
+}
+
+class CustomRepo extends DocumentRepository {
 
 }
