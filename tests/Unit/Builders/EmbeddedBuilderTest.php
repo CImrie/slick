@@ -39,6 +39,8 @@ class EmbeddedBuilderTest extends TestCase
                 ->setDefault('test')
             ;
 
+        $this->builder->build();
+
         $this->assertEquals(User::class, $this->metadata()->fieldMappings['user']['targetDocument']);
         $this->assertEquals('type', $this->metadata()->fieldMappings['user']['discriminatorField']);
         $this->assertEquals(['user' => User::class], $this->metadata()->fieldMappings['user']['discriminatorMap']);
@@ -52,6 +54,8 @@ class EmbeddedBuilderTest extends TestCase
     {
         $this->builder->many(User::class)
             ->field('users');
+
+        $this->builder->build();
 
         $this->assertEquals(User::class, $this->metadata()->fieldMappings['users']['targetDocument']);
     }

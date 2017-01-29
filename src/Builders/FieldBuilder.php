@@ -6,6 +6,7 @@ namespace CImrie\Slick\Builders;
 
 use CImrie\ODM\Mapping\ClassMetadataBuilder;
 use CImrie\ODM\Mapping\Field;
+use Doctrine\ODM\MongoDB\Mapping\ClassMetadataInfo;
 
 class FieldBuilder extends AbstractBuilder
 {
@@ -18,6 +19,7 @@ class FieldBuilder extends AbstractBuilder
      * @var Field
      */
     protected $field;
+    protected $isIdentifier = false;
 
     public function __construct(ClassMetadataBuilder $metadataBuilder)
     {
@@ -29,7 +31,18 @@ class FieldBuilder extends AbstractBuilder
     {
         $this->field->name($name);
         $this->fieldName = $name;
-        $this->updateMapping();
+
+        return $this;
+    }
+
+    public function identifier()
+    {
+        if(!$this->fieldName)
+        {
+            throw new \Exception("No field name is set on Field mapping, yet you have tried to set it as the identifier. Make sure to set the field name before making it an ID field.");
+        }
+
+        $this->isIdentifier = true;
 
         return $this;
     }
@@ -37,7 +50,6 @@ class FieldBuilder extends AbstractBuilder
     public function type($type)
     {
         $this->field->type($type);
-        $this->updateMapping();
 
         return $this;
     }
@@ -45,7 +57,6 @@ class FieldBuilder extends AbstractBuilder
     public function nullable()
     {
         $this->field->nullable(true);
-        $this->updateMapping();
 
         return $this;
     }
@@ -53,7 +64,6 @@ class FieldBuilder extends AbstractBuilder
     public function strategy($strategy)
     {
         $this->field->strategy($strategy);
-        $this->updateMapping();
 
         return $this;
     }
@@ -61,7 +71,6 @@ class FieldBuilder extends AbstractBuilder
     public function column($name)
     {
         $this->field->columnName($name);
-        $this->updateMapping();
 
         return $this;
     }
@@ -69,7 +78,6 @@ class FieldBuilder extends AbstractBuilder
     public function alsoLoad($property)
     {
         $this->field->alsoLoad($property);
-        $this->updateMapping();
 
         return $this;
     }
@@ -77,7 +85,6 @@ class FieldBuilder extends AbstractBuilder
     public function doNotSave()
     {
         $this->field->dontSave(true);
-        $this->updateMapping();
 
         return $this;
     }
@@ -89,10 +96,16 @@ class FieldBuilder extends AbstractBuilder
         return $this;
     }
 
-    private function updateMapping()
+    public function build()
     {
-        $this->metadataBuilder->getClassMetadata()->fieldMappings[$this->fieldName] = $this->field->asArray();
+        $this->metadataBuilder->addField($this->field);
 
-        return $this;
+        if($this->isIdentifier)
+        {
+            $this->metadataBuilder->getClassMetadata()->setIdentifier($this->fieldName);
+            $this->strategy('AUTO');
+        }
+
+        return $this->metadataBuilder;
     }
 }

@@ -49,10 +49,18 @@ trait DocumentProperties
         return $this;
     }
 
+    public function collectionPerClassInheritance()
+    {
+        $this->metadataBuilder->enableCollectionPerClassInheritance();
+
+        return $this;
+    }
+
     public function discriminate($field)
     {
         $discriminatorBuilder = new DiscriminatorBuilder($this->metadataBuilder);
         $discriminatorBuilder->field($field);
+        $this->addBuilder($discriminatorBuilder);
 
         return $discriminatorBuilder;
     }

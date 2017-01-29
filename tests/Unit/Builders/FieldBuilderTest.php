@@ -39,6 +39,7 @@ class FieldBuilderTest extends TestCase
      */
     public function can_add_field_mapping()
     {
+        $this->builder->build();
         $this->assertEquals('name', $this->metadata()->fieldMappings['name']['fieldName']);
     }
 
@@ -48,6 +49,8 @@ class FieldBuilderTest extends TestCase
     public function can_set_type()
     {
         $this->assertBuilder($this->builder->type('string'));
+        $this->builder->build();
+
         $this->assertEquals('string', $this->metadata()->fieldMappings['name']['type']);
     }
 
@@ -57,6 +60,8 @@ class FieldBuilderTest extends TestCase
     public function can_set_nullable()
     {
         $this->assertBuilder($this->builder->nullable());
+        $this->builder->build();
+
         $this->assertTrue($this->metadata()->fieldMappings['name']['nullable']);
     }
 
@@ -66,6 +71,8 @@ class FieldBuilderTest extends TestCase
     public function can_set_strategy()
     {
         $this->assertBuilder($this->builder->strategy('none'));
+        $this->builder->build();
+
         $this->assertEquals('none', $this->metadata()->fieldMappings['name']['strategy']);
     }
 
@@ -75,6 +82,8 @@ class FieldBuilderTest extends TestCase
     public function can_set_column_name_in_database()
     {
         $this->assertBuilder($this->builder->column('test_name'));
+        $this->builder->build();
+
         $this->assertEquals('test_name', $this->metadata()->fieldMappings['name']['name']);
     }
 
@@ -87,6 +96,7 @@ class FieldBuilderTest extends TestCase
             ->alsoLoad('fullName')
             ->alsoLoad('facebookName')
         );
+        $this->builder->build();
 
         $this->assertEquals(['fullName', 'facebookName'], $this->metadata()->fieldMappings['name']['alsoLoadFields']);
     }
@@ -97,6 +107,8 @@ class FieldBuilderTest extends TestCase
     public function can_set_to_read_only()
     {
         $this->assertBuilder($this->builder->readOnly());
+        $this->builder->build();
+
         $this->assertEquals(true, $this->metadata()->fieldMappings['name']['notSaved']);
     }
 
