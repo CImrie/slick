@@ -6,6 +6,7 @@ namespace CImrie\Slick\Builders;
 
 use CImrie\ODM\Mapping\ClassMetadataBuilder;
 use CImrie\ODM\Mapping\Field;
+use CImrie\ODM\Mapping\Index;
 use Doctrine\ODM\MongoDB\Mapping\ClassMetadataInfo;
 
 class FieldBuilder extends AbstractBuilder
@@ -20,6 +21,7 @@ class FieldBuilder extends AbstractBuilder
      */
     protected $field;
     protected $isIdentifier = false;
+    protected $isUnique = false;
 
     public function __construct(ClassMetadataBuilder $metadataBuilder)
     {
@@ -96,6 +98,13 @@ class FieldBuilder extends AbstractBuilder
         return $this;
     }
 
+    public function unique()
+    {
+        $this->isUnique = true;
+
+        return $this;
+    }
+
     public function build()
     {
         $this->metadataBuilder->addField($this->field);
@@ -104,6 +113,15 @@ class FieldBuilder extends AbstractBuilder
         {
             $this->metadataBuilder->getClassMetadata()->setIdentifier($this->fieldName);
             $this->strategy('AUTO');
+        }
+
+        if($this->isUnique)
+        {
+            $this->metadataBuilder->getClassMetadata()->addIndex(
+                (new Index())
+                    ->key($this->fieldName)
+                    ->asArray()
+            );
         }
 
         return $this->metadataBuilder;

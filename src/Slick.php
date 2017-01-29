@@ -22,6 +22,10 @@ class Slick extends AbstractBuilder
      */
     protected $builders = [];
 
+    /**
+     * @param $name
+     * @return FieldBuilder
+     */
     public function field($name)
     {
         $fieldBuilder = new FieldBuilder($this->metadataBuilder);
