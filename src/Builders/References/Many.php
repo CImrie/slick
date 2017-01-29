@@ -17,4 +17,9 @@ class Many extends AbstractBuilder
         parent::__construct($metadataBuilder);
         $this->reference = new \CImrie\ODM\Mapping\References\Many();
     }
+
+    public function build()
+    {
+        $this->metadataBuilder->addReference($this->reference);
+    }
 }

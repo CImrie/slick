@@ -6,9 +6,7 @@ namespace Tests\Unit;
 
 use CImrie\ODM\Mapping\ClassMetadataBuilder;
 use CImrie\ODM\Mapping\Index;
-use CImrie\ODM\Mapping\Indexes;
-use CImrie\Slick\DocumentBuilder;
-use CImrie\Slick\Builders\AbstractBuilder;
+use CImrie\Slick\Slick;
 use Doctrine\ODM\MongoDB\DocumentRepository;
 use Doctrine\ODM\MongoDB\Mapping\ClassMetadata;
 use Tests\Model\Documents\User;
@@ -25,7 +23,7 @@ class DocumentBuilderTest extends TestCase
     protected $metadataBuilder;
 
     /**
-     * @var DocumentBuilder
+     * @var Slick
      */
     protected $builder;
 
@@ -33,7 +31,7 @@ class DocumentBuilderTest extends TestCase
     {
         parent::setUp();
         $this->metadataBuilder = new ClassMetadataBuilder(new ClassMetadata(User::class));
-        $this->builder = new DocumentBuilder($this->metadataBuilder);
+        $this->builder = new Slick($this->metadataBuilder);
     }
 
     /**
@@ -41,7 +39,8 @@ class DocumentBuilderTest extends TestCase
      */
     public function can_make_mapped_superclass()
     {
-        $this->assertBuilder($this->builder->mappedSuperclass());
+        $this->assertBuilder($this->builder->mappedSuperclass()->build());
+
         $this->assertTrue($this->metadata()->isMappedSuperclass);
     }
 
@@ -50,7 +49,7 @@ class DocumentBuilderTest extends TestCase
      */
     public function can_make_embedded_document()
     {
-        $this->assertBuilder($this->builder->embedded());
+        $this->assertBuilder($this->builder->embedded()->build());
         $this->assertTrue($this->metadata()->isEmbeddedDocument);
     }
 
@@ -84,6 +83,8 @@ class DocumentBuilderTest extends TestCase
                 ->discriminate('type')
         );
 
+        $this->builder->build();
+
         $this->assertEquals('type', $this->metadata()->discriminatorField);
     }
 
@@ -99,6 +100,8 @@ class DocumentBuilderTest extends TestCase
                 ->with(['foo' => User::class])
         );
 
+        $this->builder->build();
+
         $this->assertEquals(['foo' => User::class], $this->metadata()->discriminatorMap);
     }
 
@@ -113,6 +116,8 @@ class DocumentBuilderTest extends TestCase
                 ->discriminate('type')
                 ->setDefault('foo')
         );
+
+        $this->builder->build();
 
         $this->assertEquals('foo', $this->metadata()->defaultDiscriminatorValue);
     }
@@ -195,7 +200,16 @@ class DocumentBuilderTest extends TestCase
      */
     public function can_add_built_indexes()
     {
-        $this->assertBuilder($this->builder->indexes([new Index(), new Index(), new Index()]));
+        $this->builder->index();
+        $this->builder->index();
+        $this->builder->index();
+
+        $this->assertBuilder(
+            $this->builder
+        );
+
+        $this->builder->build();
+
         $this->assertCount(3, $this->metadata()->indexes);
     }
 

@@ -7,10 +7,9 @@ namespace CImrie\Slick\Builders\References;
 use CImrie\ODM\Mapping\ClassMetadataBuilder;
 use CImrie\ODM\Mapping\References\DefaultReferenceMappings;
 use CImrie\ODM\Mapping\References\Reference;
-use CImrie\Slick\Builders\AbstractBuilder;
 use CImrie\Slick\Builders\Traits\RelationDiscriminatorMapping;
 
-class ReferenceDiscriminatorBuilder extends AbstractBuilder
+class ReferenceDiscriminatorBuilder
 {
     use RelationDiscriminatorMapping;
 
@@ -42,7 +41,7 @@ class ReferenceDiscriminatorBuilder extends AbstractBuilder
      */
     public function __construct(ClassMetadataBuilder $metadataBuilder, Reference $reference, $referenceFieldName)
     {
-        parent::__construct($metadataBuilder);
+        $this->metadataBuilder = $metadataBuilder;
         $this->relation = $reference;
         $this->relationFieldName = $referenceFieldName;
     }

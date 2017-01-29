@@ -30,7 +30,6 @@ trait DefaultEmbedMappings
     {
         $this->fieldName = $name;
         $this->embed->field($name);
-        $this->updateMapping();
 
         return $this;
     }
@@ -38,7 +37,6 @@ trait DefaultEmbedMappings
     public function target($class)
     {
         $this->embed->entity($class);
-        $this->updateMapping();
 
         return $this;
     }
@@ -50,10 +48,5 @@ trait DefaultEmbedMappings
         $discriminatorBuilder->field($field);
 
         return $discriminatorBuilder;
-    }
-
-    public function updateMapping()
-    {
-        $this->metadataBuilder->getClassMetadata()->fieldMappings[$this->fieldName] = $this->embed->asArray();
     }
 }

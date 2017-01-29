@@ -22,4 +22,9 @@ class One extends AbstractBuilder
         parent::__construct($metadataBuilder);
         $this->embed = new \CImrie\ODM\Mapping\Embeds\One();
     }
+
+    public function build()
+    {
+        return $this->metadataBuilder->addEmbeddedDocument($this->embed);
+    }
 }

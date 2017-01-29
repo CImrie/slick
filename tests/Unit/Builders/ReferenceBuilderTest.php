@@ -46,27 +46,29 @@ class ReferenceBuilderTest extends TestCase
                 ->removeOrphans()
                 ->repositoryMethod('test')
         );
+        $reference->build();
 
         $this->assertEquals('name', $this->metadata()->fieldMappings['name']['fieldName']);
         $this->assertEquals(User::class, $this->metadata()->fieldMappings['name']['targetDocument']);
         $this->assertEquals('user', $this->metadata()->fieldMappings['name']['mappedBy']);
         $this->assertTrue($this->metadata()->fieldMappings['name']['orphanRemoval']);
         $this->assertEquals('test', $this->metadata()->fieldMappings['name']['repositoryMethod']);
-        $this->assertEquals(['all'], $this->metadata()->fieldMappings['name']['cascade']);
+        $this->assertEquals(['remove', 'persist', 'refresh','merge', 'detach'], $this->metadata()->fieldMappings['name']['cascade']);
 
         $reference
             ->mappedBy(null)
             ->inversedBy('user');
+        $reference->build();
 
         $this->assertEquals('user', $this->metadata()->fieldMappings['name']['inversedBy']);
 
-        $reference->storeAsDbRefWithDbName();
+        $reference->storeAsDbRefWithDbName(); $reference->build();
         $this->assertEquals(Reference::DB_REF_WITH_DB_NAME, $this->metadata()->fieldMappings['name']['storeAs']);
 
-        $reference->storeAsDbRefWithoutDbName();
+        $reference->storeAsDbRefWithoutDbName(); $reference->build();
         $this->assertEquals(Reference::DB_REF_WITHOUT_DB_NAME, $this->metadata()->fieldMappings['name']['storeAs']);
 
-        $reference->storeAsId();
+        $reference->storeAsId(); $reference->build();
         $this->assertEquals(Reference::DB_REF_ID_ONLY, $this->metadata()->fieldMappings['name']['storeAs']);
     }
 
@@ -82,9 +84,13 @@ class ReferenceBuilderTest extends TestCase
                 ->mappedBy('user')
                 ->cascade('all')
                 ->removeOrphans()
-                ->discriminate('type')
-                    ->setDefault('test_default')
         );
+
+        $reference
+            ->discriminate('type')
+            ->setDefault('test_default');
+
+        $reference->build();
 
         $this->assertEquals('type', $this->metadata()->fieldMappings['name']['discriminatorField']);
         $this->assertEquals('test_default', $this->metadata()->fieldMappings['name']['defaultDiscriminatorValue']);

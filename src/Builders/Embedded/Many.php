@@ -22,4 +22,9 @@ class Many extends AbstractBuilder
         parent::__construct($metadataBuilder);
         $this->embed = new \CImrie\ODM\Mapping\Embeds\Many();
     }
+
+    public function build()
+    {
+        return $this->metadataBuilder->addManyEmbeddedDocument($this->embed);
+    }
 }

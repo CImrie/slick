@@ -66,9 +66,10 @@ trait FieldAliases
         return $this->field($name)->type('hash');
     }
 
-    public function id($name)
+    public function id($name = 'id')
     {
-        return $this->field($name)->type('id')->strategy('INCREMENT');
+//        strategy('AUTO')
+        return $this->field($name)->type('id')->identifier();
     }
 
     public function integer($name)
@@ -99,5 +100,16 @@ trait FieldAliases
     public function timestamp($name)
     {
         return $this->field($name)->type('timestamp');
+    }
+
+    public function __call($name, $arguments)
+    {
+        // get the types it could be
+        //if the argument count is 1, call $this->field(arg1)->type($method);
+
+        if(count($arguments) === 1)
+        {
+            return $this->field($arguments[0])->type($name);
+        }
     }
 }

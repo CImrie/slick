@@ -17,4 +17,9 @@ class One extends AbstractBuilder
         parent::__construct($metadataBuilder);
         $this->reference = new \CImrie\ODM\Mapping\References\One();
     }
+
+    public function build()
+    {
+        return $this->metadataBuilder->addReference($this->reference);
+    }
 }
