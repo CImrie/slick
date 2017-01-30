@@ -26,6 +26,10 @@ trait DefaultReferenceMappings
     protected $metadataBuilder;
 
 
+    /**
+     * @param $name
+     * @return $this
+     */
     public function field($name)
     {
         $this->fieldName = $name;
@@ -34,6 +38,10 @@ trait DefaultReferenceMappings
         return $this;
     }
 
+    /**
+     * @param $class
+     * @return $this
+     */
     public function target($class)
     {
         $this->reference->entity($class);
@@ -41,6 +49,10 @@ trait DefaultReferenceMappings
         return $this;
     }
 
+    /**
+     * @param $field
+     * @return $this
+     */
     public function mappedBy($field)
     {
         $this->reference->mappedBy($field);
@@ -48,6 +60,10 @@ trait DefaultReferenceMappings
         return $this;
     }
 
+    /**
+     * @param $field
+     * @return $this
+     */
     public function inversedBy($field)
     {
         $this->reference->inversedBy($field);
@@ -55,6 +71,10 @@ trait DefaultReferenceMappings
         return $this;
     }
 
+    /**
+     * @param $cascades
+     * @return $this
+     */
     public function cascade($cascades)
     {
         $this->reference->cascade($cascades);
@@ -62,6 +82,9 @@ trait DefaultReferenceMappings
         return $this;
     }
 
+    /**
+     * @return $this
+     */
     public function removeOrphans()
     {
         $this->reference->removeOrphans();
@@ -69,6 +92,10 @@ trait DefaultReferenceMappings
         return $this;
     }
 
+    /**
+     * @param $method
+     * @return $this
+     */
     public function repositoryMethod($method)
     {
         $this->reference->repositoryMethod($method);
@@ -76,6 +103,9 @@ trait DefaultReferenceMappings
         return $this;
     }
 
+    /**
+     * @return $this
+     */
     public function storeAsDbRefWithDbName()
     {
         $this->reference->storeAsDbRefWithDbName();
@@ -83,6 +113,9 @@ trait DefaultReferenceMappings
         return $this;
     }
 
+    /**
+     * @return $this
+     */
     public function storeAsDbRefWithoutDbName()
     {
         $this->reference->storeAsDbRefWithoutDbName();
@@ -90,6 +123,9 @@ trait DefaultReferenceMappings
         return $this;
     }
 
+    /**
+     * @return $this
+     */
     public function storeAsId()
     {
         $this->reference->storeAsId();
@@ -97,10 +133,14 @@ trait DefaultReferenceMappings
         return $this;
     }
 
+    /**
+     * @param $field
+     * @return ReferenceDiscriminatorBuilder
+     */
     public function discriminate($field)
     {
         $this->metadataBuilder->enableSingleCollectionInheritance();
-        $discriminatorBuilder = (new ReferenceDiscriminatorBuilder($this->metadataBuilder, $this->reference, $this->fieldName));
+        $discriminatorBuilder = (new ReferenceDiscriminatorBuilder($this->reference));
         $discriminatorBuilder->field($field);
 
         return $discriminatorBuilder;

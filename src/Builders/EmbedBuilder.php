@@ -12,6 +12,10 @@ class EmbedBuilder extends AbstractBuilder
 {
     use DecoratedBuilderHelpers;
 
+    /**
+     * @param $target
+     * @return One | Builder
+     */
     public function one($target)
     {
         $builder =(new One($this->metadataBuilder))->target($target);
@@ -19,6 +23,10 @@ class EmbedBuilder extends AbstractBuilder
         return $this->builder($builder);
     }
 
+    /**
+     * @param $target
+     * @return Many | Builder
+     */
     public function many($target)
     {
         $builder = (new Many($this->metadataBuilder))->target($target);

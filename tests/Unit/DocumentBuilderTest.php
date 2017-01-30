@@ -114,7 +114,8 @@ class DocumentBuilderTest extends TestCase
             $this->builder
                 ->singleCollectionInheritance()
                 ->discriminate('type')
-                ->setDefault('foo')
+                    ->with(['foo' => User::class])
+                    ->setDefault('foo')
         );
 
         $this->builder->build();

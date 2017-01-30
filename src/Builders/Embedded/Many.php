@@ -5,10 +5,12 @@ namespace CImrie\Slick\Builders\Embedded;
 
 
 use CImrie\ODM\Mapping\ClassMetadataBuilder;
+use CImrie\ODM\Mapping\Discriminator;
 use CImrie\Slick\Builders\AbstractBuilder;
+use CImrie\Slick\Builders\Builder;
 use CImrie\Slick\Builders\Traits\DefaultEmbedMappings;
 
-class Many extends AbstractBuilder
+class Many extends AbstractBuilder implements Builder
 {
     use DefaultEmbedMappings;
 
@@ -17,10 +19,16 @@ class Many extends AbstractBuilder
      */
     protected $embed;
 
+    /**
+     * @var Discriminator
+     */
+    protected $discriminator;
+
     public function __construct(ClassMetadataBuilder $metadataBuilder)
     {
         parent::__construct($metadataBuilder);
         $this->embed = new \CImrie\ODM\Mapping\Embeds\Many();
+        $this->discriminator = $this->embed->discriminate();
     }
 
     public function build()

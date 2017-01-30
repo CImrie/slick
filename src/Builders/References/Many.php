@@ -6,9 +6,10 @@ namespace CImrie\Slick\Builders\References;
 
 use CImrie\ODM\Mapping\ClassMetadataBuilder;
 use CImrie\Slick\Builders\AbstractBuilder;
+use CImrie\Slick\Builders\Builder;
 use CImrie\Slick\Builders\Traits\DefaultReferenceMappings;
 
-class Many extends AbstractBuilder
+class Many extends AbstractBuilder implements Builder
 {
     use DefaultReferenceMappings;
 

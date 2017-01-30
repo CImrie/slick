@@ -14,6 +14,9 @@ trait DocumentProperties
      */
     protected $metadataBuilder;
 
+    /**
+     * @return $this
+     */
     public function mappedSuperclass()
     {
         $this->metadataBuilder->setMappedSuperclass();
@@ -21,6 +24,9 @@ trait DocumentProperties
         return $this;
     }
 
+    /**
+     * @return $this
+     */
     public function embedded()
     {
         $this->metadataBuilder->setEmbedded();
@@ -28,6 +34,10 @@ trait DocumentProperties
         return $this;
     }
 
+    /**
+     * @param $name
+     * @return $this
+     */
     public function collectionName($name)
     {
         $this->metadataBuilder->setCollectionName($name);
@@ -35,6 +45,10 @@ trait DocumentProperties
         return $this;
     }
 
+    /**
+     * @param $writeConcernString
+     * @return $this
+     */
     public function writeConcern($writeConcernString)
     {
         $this->metadataBuilder->setWriteConcern($writeConcernString);
@@ -42,6 +56,9 @@ trait DocumentProperties
         return $this;
     }
 
+    /**
+     * @return $this
+     */
     public function singleCollectionInheritance()
     {
         $this->metadataBuilder->enableSingleCollectionInheritance();
@@ -49,6 +66,9 @@ trait DocumentProperties
         return $this;
     }
 
+    /**
+     * @return $this
+     */
     public function collectionPerClassInheritance()
     {
         $this->metadataBuilder->enableCollectionPerClassInheritance();
@@ -56,6 +76,10 @@ trait DocumentProperties
         return $this;
     }
 
+    /**
+     * @param $field
+     * @return DiscriminatorBuilder
+     */
     public function discriminate($field)
     {
         $discriminatorBuilder = new DiscriminatorBuilder($this->metadataBuilder);
@@ -65,6 +89,9 @@ trait DocumentProperties
         return $discriminatorBuilder;
     }
 
+    /**
+     * @return $this
+     */
     public function trackChangesImplicitly()
     {
         $this->metadataBuilder->setImplicitChangeTracking();
@@ -72,6 +99,9 @@ trait DocumentProperties
         return $this;
     }
 
+    /**
+     * @return $this
+     */
     public function trackChangesExplicitly()
     {
         $this->metadataBuilder->setExplicitChangeTracking();
@@ -79,6 +109,9 @@ trait DocumentProperties
         return $this;
     }
 
+    /**
+     * @return $this
+     */
     public function trackChangesWithNotification()
     {
         $this->metadataBuilder->setNotifyChangeTracking();
@@ -86,6 +119,11 @@ trait DocumentProperties
         return $this;
     }
 
+    /**
+     * @param array $keys
+     * @param array $options
+     * @return $this
+     */
     public function shardKey(array $keys, array $options = [])
     {
         $this->metadataBuilder->setShardKey($keys, $options);
@@ -93,6 +131,10 @@ trait DocumentProperties
         return $this;
     }
 
+    /**
+     * @param bool $truthy
+     * @return $this
+     */
     public function allowReadFromSlaves($truthy = true)
     {
         $this->metadataBuilder->setSlaveOkay($truthy);
@@ -100,6 +142,9 @@ trait DocumentProperties
         return $this;
     }
 
+    /**
+     * @return $this
+     */
     public function version()
     {
         $this->metadataBuilder->version(true);
@@ -107,6 +152,10 @@ trait DocumentProperties
         return $this;
     }
 
+    /**
+     * @param $repositoryClass
+     * @return $this
+     */
     public function repository($repositoryClass)
     {
         $this->metadataBuilder->setCustomRepository($repositoryClass);
