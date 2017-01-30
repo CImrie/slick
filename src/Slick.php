@@ -4,6 +4,7 @@
 namespace CImrie\Slick;
 
 
+use CImrie\ODM\Mapping\Discriminator;
 use CImrie\Slick\Builders\AbstractBuilder;
 use CImrie\Slick\Builders\Builder;
 use CImrie\Slick\Builders\EmbedBuilder;
@@ -21,6 +22,11 @@ class Slick extends AbstractBuilder
      * @var array
      */
     protected $builders = [];
+
+    /**
+     * @var Discriminator
+     */
+    protected $discriminator;
 
     /**
      * @param $name

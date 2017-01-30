@@ -26,6 +26,10 @@ trait DefaultEmbedMappings
      */
     protected $metadataBuilder;
 
+    /**
+     * @param $name
+     * @return $this
+     */
     public function field($name)
     {
         $this->fieldName = $name;
@@ -34,6 +38,10 @@ trait DefaultEmbedMappings
         return $this;
     }
 
+    /**
+     * @param $class
+     * @return $this
+     */
     public function target($class)
     {
         $this->embed->entity($class);
@@ -41,10 +49,13 @@ trait DefaultEmbedMappings
         return $this;
     }
 
+    /**
+     * @param $field
+     * @return EmbedDiscriminatorBuilder | RelationDiscriminatorMapping
+     */
     public function discriminate($field)
     {
-        $this->metadataBuilder->enableSingleCollectionInheritance();
-        $discriminatorBuilder = (new EmbedDiscriminatorBuilder($this->metadataBuilder, $this->embed, $this->fieldName));
+        $discriminatorBuilder = (new EmbedDiscriminatorBuilder($this->embed));
         $discriminatorBuilder->field($field);
 
         return $discriminatorBuilder;

@@ -29,6 +29,10 @@ class FieldBuilder extends AbstractBuilder
         $this->field = new Field();
     }
 
+    /**
+     * @param $name
+     * @return $this
+     */
     public function field($name)
     {
         $this->field->name($name);
@@ -37,6 +41,10 @@ class FieldBuilder extends AbstractBuilder
         return $this;
     }
 
+    /**
+     * @return $this
+     * @throws \Exception
+     */
     public function identifier()
     {
         if(!$this->fieldName)
@@ -49,6 +57,10 @@ class FieldBuilder extends AbstractBuilder
         return $this;
     }
 
+    /**
+     * @param $type
+     * @return $this
+     */
     public function type($type)
     {
         $this->field->type($type);
@@ -56,6 +68,9 @@ class FieldBuilder extends AbstractBuilder
         return $this;
     }
 
+    /**
+     * @return $this
+     */
     public function nullable()
     {
         $this->field->nullable(true);
@@ -63,6 +78,10 @@ class FieldBuilder extends AbstractBuilder
         return $this;
     }
 
+    /**
+     * @param $strategy
+     * @return $this
+     */
     public function strategy($strategy)
     {
         $this->field->strategy($strategy);
@@ -70,6 +89,10 @@ class FieldBuilder extends AbstractBuilder
         return $this;
     }
 
+    /**
+     * @param $name
+     * @return $this
+     */
     public function column($name)
     {
         $this->field->columnName($name);
@@ -77,6 +100,10 @@ class FieldBuilder extends AbstractBuilder
         return $this;
     }
 
+    /**
+     * @param $property
+     * @return $this
+     */
     public function alsoLoad($property)
     {
         $this->field->alsoLoad($property);
@@ -84,6 +111,9 @@ class FieldBuilder extends AbstractBuilder
         return $this;
     }
 
+    /**
+     * @return $this
+     */
     public function doNotSave()
     {
         $this->field->dontSave(true);
@@ -91,6 +121,9 @@ class FieldBuilder extends AbstractBuilder
         return $this;
     }
 
+    /**
+     * @return $this
+     */
     public function readOnly()
     {
         $this->doNotSave();
@@ -98,6 +131,9 @@ class FieldBuilder extends AbstractBuilder
         return $this;
     }
 
+    /**
+     * @return $this
+     */
     public function unique()
     {
         $this->isUnique = true;
@@ -105,6 +141,9 @@ class FieldBuilder extends AbstractBuilder
         return $this;
     }
 
+    /**
+     * @return ClassMetadataBuilder
+     */
     public function build()
     {
         $this->metadataBuilder->addField($this->field);

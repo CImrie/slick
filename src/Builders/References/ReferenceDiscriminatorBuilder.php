@@ -6,6 +6,7 @@ namespace CImrie\Slick\Builders\References;
 
 use CImrie\ODM\Mapping\ClassMetadataBuilder;
 use CImrie\ODM\Mapping\References\DefaultReferenceMappings;
+use CImrie\ODM\Mapping\References\Many;
 use CImrie\ODM\Mapping\References\Reference;
 use CImrie\Slick\Builders\Traits\RelationDiscriminatorMapping;
 
@@ -14,36 +15,20 @@ class ReferenceDiscriminatorBuilder
     use RelationDiscriminatorMapping;
 
     /**
-     * @var Reference | DefaultReferenceMappings
+     * @var One | Many
      */
-    protected $relation;
-
-    /**
-     * @var string
-     */
-    protected $discriminatorFieldName;
-
-    /**
-     * @var array
-     */
-    protected $mapping = [];
-
-    /**
-     * @var string
-     */
-    protected $relationFieldName;
+    protected $reference;
 
     /**
      * ReferenceDiscriminatorBuilder constructor.
-     * @param ClassMetadataBuilder $metadataBuilder
      * @param Reference | DefaultReferenceMappings $reference
-     * @param $referenceFieldName
+     * @internal param ClassMetadataBuilder $metadataBuilder
+     * @internal param $referenceFieldName
      */
-    public function __construct(ClassMetadataBuilder $metadataBuilder, Reference $reference, $referenceFieldName)
+    public function __construct(Reference $reference)
     {
-        $this->metadataBuilder = $metadataBuilder;
-        $this->relation = $reference;
-        $this->relationFieldName = $referenceFieldName;
+        $this->reference = $reference;
+        $this->discriminator = $this->reference->discriminate();
     }
 
 

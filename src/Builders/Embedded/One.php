@@ -6,9 +6,10 @@ namespace CImrie\Slick\Builders\Embedded;
 
 use CImrie\ODM\Mapping\ClassMetadataBuilder;
 use CImrie\Slick\Builders\AbstractBuilder;
+use CImrie\Slick\Builders\Builder;
 use CImrie\Slick\Builders\Traits\DefaultEmbedMappings;
 
-class One extends AbstractBuilder
+class One extends AbstractBuilder implements Builder
 {
     use DefaultEmbedMappings;
 

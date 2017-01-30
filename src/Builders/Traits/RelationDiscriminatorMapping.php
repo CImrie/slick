@@ -6,58 +6,33 @@ namespace CImrie\Slick\Builders\Traits;
 
 use CImrie\ODM\Mapping\Builder;
 use CImrie\ODM\Mapping\ClassMetadataBuilder;
+use CImrie\ODM\Mapping\Discriminator;
 use CImrie\ODM\Mapping\Traits\DiscriminatorMap;
 
 trait RelationDiscriminatorMapping
 {
     /**
-     * @var DiscriminatorMap | Builder
+     * @var Discriminator
      */
-    protected $relation;
+    protected $discriminator;
 
-    /**
-     * @var string
-     */
-    protected $discriminatorFieldName;
-
-    /**
-     * @var string
-     */
-    protected $relationFieldName;
-
-    /**
-     * @var ClassMetadataBuilder
-     */
-    protected $metadataBuilder;
-
-    public function field($field)
+    public function field($name)
     {
-        $this->relation->discriminateOn($field);
-        $this->discriminatorFieldName = $field;
-        $this->updateMapping();
+        $this->discriminator->field($name);
 
         return $this;
     }
 
     public function with(array $map)
     {
-        $this->relation->discriminateUsing($map);
-        $this->updateMapping();
+        $this->discriminator->withMap($map);
 
         return $this;
     }
 
-    public function setDefault($key)
+    public function setDefault($value)
     {
-        $this->relation->discriminateOn($this->discriminatorFieldName, $key);
-        $this->updateMapping();
-
-        return $this;
-    }
-
-    protected function updateMapping()
-    {
-        $this->metadataBuilder->getClassMetadata()->fieldMappings[$this->relationFieldName] = $this->relation->asArray();
+        $this->discriminator->setDefaultValue($value);
 
         return $this;
     }

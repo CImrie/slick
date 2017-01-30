@@ -4,53 +4,59 @@
 namespace CImrie\Slick\Builders;
 
 
+use CImrie\ODM\Mapping\ClassMetadataBuilder;
+use CImrie\ODM\Mapping\Discriminator;
+
 class DiscriminatorBuilder extends AbstractBuilder
 {
-    protected $field;
-    protected $map;
-    protected $key;
+    /**
+     * @var Discriminator
+     */
+    protected $discriminator;
 
+    public function __construct(ClassMetadataBuilder $metadataBuilder)
+    {
+        parent::__construct($metadataBuilder);
+        $this->discriminator = new Discriminator();
+    }
+
+    /**
+     * @param $name
+     * @return $this
+     */
     public function field($name)
     {
-        $this->field = $name;
+        $this->discriminator->field($name);
 
         return $this;
     }
 
+    /**
+     * @param array $map
+     * @return $this
+     */
     public function with(array $map)
     {
-        $this->map = $map;
+        $this->discriminator->withMap($map);
 
         return $this;
     }
 
+    /**
+     * @param $key
+     * @return $this
+     */
     public function setDefault($key)
     {
-        $this->key = $key;
+        $this->discriminator->setDefaultValue($key);
 
         return $this;
     }
 
     public function build()
     {
-        if($this->field)
-        {
-            $this->metadataBuilder->setDiscriminatorField($this->field);
-        }
+        $this->metadataBuilder->setDiscriminator($this->discriminator);
 
-        if($this->map)
-        {
-            foreach($this->map as $alias => $class)
-            {
-                $this->metadataBuilder->addDiscriminatorMapping($alias, $class);
-            }
-        }
-
-        if($this->key)
-        {
-            $this->metadataBuilder->setDefaultDiscriminatorKey($this->key);
-        }
-
-        return $this->metadataBuilder;
+        return $this;
     }
 }
