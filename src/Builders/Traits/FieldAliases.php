@@ -2,18 +2,19 @@
 
 
 namespace CImrie\Slick\Builders\Traits;
+use CImrie\Slick\Builders\FieldBuilder;
 
 /**
  * Class FieldAliases
  * @package CImrie\Slick\Builders\Traits
- * @method $this field(string $name)
- * @method $this type(string $type)
+ * @method FieldBuilder field(string $name)
+ * @method FieldBuilder type(string $type)
  */
 trait FieldAliases
 {
     /**
      * @param $name
-     * @return $this
+     * @return FieldBuilder
      */
     public function binary($name)
     {
@@ -22,7 +23,7 @@ trait FieldAliases
 
     /**
      * @param $name
-     * @return $this
+     * @return FieldBuilder
      */
     public function binaryByteArray($name)
     {
@@ -31,7 +32,7 @@ trait FieldAliases
 
     /**
      * @param $name
-     * @return $this
+     * @return FieldBuilder
      */
     public function binaryCustom($name)
     {
@@ -40,7 +41,7 @@ trait FieldAliases
 
     /**
      * @param $name
-     * @return $this
+     * @return FieldBuilder
      */
     public function md5($name)
     {
@@ -49,7 +50,7 @@ trait FieldAliases
 
     /**
      * @param $name
-     * @return $this
+     * @return FieldBuilder
      */
     public function uuid($name)
     {
@@ -58,7 +59,7 @@ trait FieldAliases
 
     /**
      * @param $name
-     * @return $this
+     * @return FieldBuilder
      */
     public function boolean($name)
     {
@@ -67,7 +68,7 @@ trait FieldAliases
 
     /**
      * @param $name
-     * @return $this
+     * @return FieldBuilder
      */
     public function collection($name)
     {
@@ -76,7 +77,7 @@ trait FieldAliases
 
     /**
      * @param $name
-     * @return $this
+     * @return FieldBuilder
      */
     public function customId($name)
     {
@@ -85,7 +86,7 @@ trait FieldAliases
 
     /**
      * @param $name
-     * @return $this
+     * @return FieldBuilder
      */
     public function date($name)
     {
@@ -94,7 +95,7 @@ trait FieldAliases
 
     /**
      * @param $name
-     * @return $this
+     * @return FieldBuilder
      */
     public function file($name)
     {
@@ -103,7 +104,7 @@ trait FieldAliases
 
     /**
      * @param $name
-     * @return $this
+     * @return FieldBuilder
      */
     public function float($name)
     {
@@ -112,7 +113,7 @@ trait FieldAliases
 
     /**
      * @param $name
-     * @return $this
+     * @return FieldBuilder
      */
     public function hashMap($name)
     {
@@ -120,8 +121,8 @@ trait FieldAliases
     }
 
     /**
-     * @param string $name
-     * @return $this
+     * @param $name
+     * @return FieldBuilder
      */
     public function id($name = 'id')
     {
@@ -130,7 +131,7 @@ trait FieldAliases
 
     /**
      * @param $name
-     * @return $this
+     * @return FieldBuilder
      */
     public function integer($name)
     {
@@ -139,7 +140,7 @@ trait FieldAliases
 
     /**
      * @param $name
-     * @return $this
+     * @return FieldBuilder
      */
     public function key($name)
     {
@@ -148,7 +149,7 @@ trait FieldAliases
 
     /**
      * @param $name
-     * @return $this
+     * @return FieldBuilder
      */
     public function objectId($name)
     {
@@ -157,7 +158,7 @@ trait FieldAliases
 
     /**
      * @param $name
-     * @return $this
+     * @return FieldBuilder
      */
     public function raw($name)
     {
@@ -166,7 +167,7 @@ trait FieldAliases
 
     /**
      * @param $name
-     * @return $this
+     * @return FieldBuilder
      */
     public function string($name)
     {
@@ -175,7 +176,7 @@ trait FieldAliases
 
     /**
      * @param $name
-     * @return $this
+     * @return FieldBuilder
      */
     public function timestamp($name)
     {
@@ -184,7 +185,8 @@ trait FieldAliases
 
     /**
      * @param $name
-     * @return $this
+     * @param $arguments
+     * @return FieldBuilder
      */
     public function __call($name, $arguments)
     {
