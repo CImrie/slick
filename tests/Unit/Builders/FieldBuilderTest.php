@@ -7,6 +7,10 @@ namespace Tests\Unit\Builders;
 
 use CImrie\ODM\Mapping\ClassMetadataBuilder;
 use CImrie\Slick\Builders\FieldBuilder;
+use CImrie\Slick\Builders\GeneratorBuilder;
+use Doctrine\ODM\MongoDB\DocumentManager;
+use Doctrine\ODM\MongoDB\Id\AbstractIdGenerator;
+use Doctrine\ODM\MongoDB\Id\AutoGenerator;
 use Doctrine\ODM\MongoDB\Mapping\ClassMetadata;
 use Tests\Model\Documents\User;
 use Tests\TestCase;
@@ -110,6 +114,39 @@ class FieldBuilderTest extends TestCase
         $this->builder->build();
 
         $this->assertEquals(true, $this->metadata()->fieldMappings['name']['notSaved']);
+    }
+
+    /**
+     * @test
+     */
+    public function auto_generator_is_set_by_default_on_id_columns()
+    {
+        $this->builder->field('id')->identifier();
+        $this->builder->build();
+
+        $this->assertInstanceOf(AutoGenerator::class, $this->metadata()->idGenerator);
+    }
+
+    /**
+     * @test
+     */
+    public function can_set_custom_generator_for_id_column()
+    {
+        $this->builder->field('id')->identifier()
+            ->generatedValue()
+                ->custom(new CustomGenerator())
+            ;
+        $this->builder->build();
+
+        $this->assertInstanceOf(CustomGenerator::class, $this->metadata()->idGenerator);
+    }
+}
+
+class CustomGenerator extends AbstractIdGenerator {
+
+    public function generate(DocumentManager $dm, $document)
+    {
+        return 'hi hello';
     }
 
 }

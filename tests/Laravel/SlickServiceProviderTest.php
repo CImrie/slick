@@ -10,6 +10,8 @@ use CImrie\Slick\Mapping\SlickDriver;
 use CImrie\Slick\SlickServiceProvider;
 use Doctrine\Common\Persistence\Mapping\ClassMetadata;
 use Doctrine\ODM\MongoDB\DocumentManager;
+use Illuminate\Mail\Mailer;
+use Tests\Model\Documents\Employee;
 use Tests\Model\Documents\User;
 
 class SlickServiceProviderTest extends \TestCase
@@ -31,7 +33,7 @@ class SlickServiceProviderTest extends \TestCase
         ]);
         $this->app->make('config')->set('odm.managers.default.meta', SlickDriver::class);
 //        $this->app->make('config')->set('odm.metadata_drivers', [SlickDriver::class]);
-        $this->app->make('config')->set('odm.managers.default.mappings', [CustomMapping::class]);
+        $this->app->make('config')->set('odm.managers.default.mappings', [CustomMapping::class, ResolveableMapping::class]);
         $this->app->register(SlickServiceProvider::class);
     }
 
@@ -47,6 +49,18 @@ class SlickServiceProviderTest extends \TestCase
         $this->assertInstanceOf(ClassMetadata::class, $metadata);
         $this->assertEquals(['id'], $metadata->getIdentifier());
     }
+
+    /**
+     * @test
+     */
+    public function can_resolve_mapping_files_from_container()
+    {
+        $dm = $this->app->make(DocumentManager::class);
+        $metadata = $dm->getClassMetadata(Employee::class);
+
+        $this->assertInstanceOf(ClassMetadata::class, $metadata);
+        $this->assertEquals(['id'], $metadata->getIdentifier());
+    }
 }
 
 class CustomMapping extends DocumentMapping {
@@ -54,6 +68,24 @@ class CustomMapping extends DocumentMapping {
     public static function mapFor()
     {
         return User::class;
+    }
+
+    public function map(Slick $builder)
+    {
+        $builder->id();
+    }
+}
+
+class ResolveableMapping extends DocumentMapping {
+
+    public function __construct(Mailer $mailer)
+    {
+
+    }
+
+    public static function mapFor()
+    {
+        return Employee::class;
     }
 
     public function map(Slick $builder)

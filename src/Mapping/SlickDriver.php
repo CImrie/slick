@@ -10,6 +10,7 @@ use Doctrine\Common\Persistence\Mapping\ClassMetadata;
 use Doctrine\ODM\MongoDB\Mapping\ClassMetadata as OdmClassMetadata;
 use Doctrine\Common\Persistence\Mapping\Driver\MappingDriver;
 use Doctrine\ODM\MongoDB\Mapping\ClassMetadataInfo;
+use CImrie\Slick\Mapping\Registry as MappingRegistry;
 
 class SlickDriver extends AbstractMetadata implements MappingDriver
 {
@@ -23,8 +24,15 @@ class SlickDriver extends AbstractMetadata implements MappingDriver
      */
     protected $builderFactory;
 
-    public function __construct()
+    /**
+     * @var MappingRegistry
+     */
+    protected $mappingRegistry;
+
+    public function __construct(MappingRegistry $registry = null)
     {
+        $this->mappingRegistry = $registry ?: new MappingRegistry();
+
         $this->builderFactory = function(OdmClassMetadata $classMetadata)
         {
             return (new Slick(
@@ -41,8 +49,8 @@ class SlickDriver extends AbstractMetadata implements MappingDriver
         $mappingClasses = array_get($settings, 'mappings', []);
         foreach ($mappingClasses as $mappingClass) {
             /** @var Mapping $mapping */
-            $mapping = new $mappingClass();
-            $this->mappings[$mapping->mapFor()] = $mapping;
+            $mapping = $this->mappingRegistry->get($mappingClass);
+            $this->addMapping($mapping);
         }
 
         return $this;
@@ -73,6 +81,13 @@ class SlickDriver extends AbstractMetadata implements MappingDriver
     {
         $factory = $this->builderFactory;
         return $factory($metadata);
+    }
+
+    protected function addMapping(Mapping $mapping)
+    {
+        $this->mappings[$mapping->mapFor()] = $mapping;
+
+        return $this;
     }
 
     /**
