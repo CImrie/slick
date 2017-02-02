@@ -112,16 +112,16 @@
         },
         {
             "name": "cimrie/odm",
-            "version": "v0.2.6",
+            "version": "v0.2.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/CImrie/odm.git",
-                "reference": "6afe7ae502ba9a9382aa7db588a3a2477ffd5110"
+                "reference": "cef53ca1fc5b0d7b8d5f23bd98c18f2064579912"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/CImrie/odm/zipball/6afe7ae502ba9a9382aa7db588a3a2477ffd5110",
-                "reference": "6afe7ae502ba9a9382aa7db588a3a2477ffd5110",
+                "url": "https://api.github.com/repos/CImrie/odm/zipball/cef53ca1fc5b0d7b8d5f23bd98c18f2064579912",
+                "reference": "cef53ca1fc5b0d7b8d5f23bd98c18f2064579912",
                 "shasum": ""
             },
             "require": {
@@ -166,7 +166,7 @@
                 "mongodb",
                 "odm"
             ],
-            "time": "2017-02-02 16:08:19"
+            "time": "2017-02-02 16:59:41"
         },
         {
             "name": "classpreloader/classpreloader",
