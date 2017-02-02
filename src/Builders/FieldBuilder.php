@@ -6,6 +6,8 @@ namespace CImrie\Slick\Builders;
 
 use CImrie\ODM\Mapping\ClassMetadataBuilder;
 use CImrie\ODM\Mapping\Field;
+use CImrie\ODM\Mapping\Generators\Auto;
+use CImrie\ODM\Mapping\Generators\Generator;
 use CImrie\ODM\Mapping\Index;
 use Doctrine\ODM\MongoDB\Mapping\ClassMetadataInfo;
 
@@ -20,13 +22,27 @@ class FieldBuilder extends AbstractBuilder
      * @var Field
      */
     protected $field;
+
+    /**
+     * @var bool
+     */
     protected $isIdentifier = false;
+
+    /**
+     * @var bool
+     */
     protected $isUnique = false;
+
+    /**
+     * @var GeneratorBuilder
+     */
+    protected $generator;
 
     public function __construct(ClassMetadataBuilder $metadataBuilder)
     {
         parent::__construct($metadataBuilder);
         $this->field = new Field();
+        $this->generator = new GeneratorBuilder;
     }
 
     /**
@@ -141,6 +157,12 @@ class FieldBuilder extends AbstractBuilder
         return $this;
     }
 
+    public function generatedValue()
+    {
+        $this->generator = new GeneratorBuilder;
+        return $this->generator;
+    }
+
     /**
      * @return ClassMetadataBuilder
      */
@@ -151,7 +173,7 @@ class FieldBuilder extends AbstractBuilder
         if($this->isIdentifier)
         {
             $this->metadataBuilder->getClassMetadata()->setIdentifier($this->fieldName);
-            $this->strategy('AUTO');
+            $this->metadataBuilder->setIdGenerator($this->generator);
         }
 
         if($this->isUnique)
