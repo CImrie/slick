@@ -10,7 +10,9 @@ use CImrie\Slick\Mapping\SlickDriver;
 use CImrie\Slick\SlickServiceProvider;
 use Doctrine\Common\Persistence\Mapping\ClassMetadata;
 use Doctrine\ODM\MongoDB\DocumentManager;
+use Doctrine\ODM\MongoDB\Id\AbstractIdGenerator;
 use Illuminate\Mail\Mailer;
+use Illuminate\Support\Facades\App;
 use Tests\Model\Documents\Employee;
 use Tests\Model\Documents\User;
 
@@ -33,7 +35,7 @@ class SlickServiceProviderTest extends \TestCase
         ]);
         $this->app->make('config')->set('odm.managers.default.meta', SlickDriver::class);
 //        $this->app->make('config')->set('odm.metadata_drivers', [SlickDriver::class]);
-        $this->app->make('config')->set('odm.managers.default.mappings', [CustomMapping::class, ResolveableMapping::class]);
+        $this->app->make('config')->set('odm.managers.default.mappings', [CustomMapping::class, ResolveableMapping::class, GeneratedValueMapping::class]);
         $this->app->register(SlickServiceProvider::class);
     }
 
@@ -60,6 +62,19 @@ class SlickServiceProviderTest extends \TestCase
 
         $this->assertInstanceOf(ClassMetadata::class, $metadata);
         $this->assertEquals(['id'], $metadata->getIdentifier());
+    }
+
+    /**
+     * @test
+     */
+    public function generated_value_options_are_set_on_new_instance()
+    {
+        $dm = $this->app->make(DocumentManager::class);
+        /** @var \Doctrine\ODM\MongoDB\Mapping\ClassMetadata $metadata */
+        $metadata = $dm->getClassMetadata(GenValueDocument::class);
+
+        $this->assertInstanceOf(TestGenerator::class, $metadata->idGenerator);
+        $this->assertInstanceOf(Mailer::class, $metadata->idGenerator->getMailer());
     }
 }
 
@@ -91,6 +106,55 @@ class ResolveableMapping extends DocumentMapping {
     public function map(Slick $builder)
     {
         $builder->id();
+    }
+
+}
+
+class GenValueDocument {
+
+    /**
+     * @var string
+     */
+    protected $id;
+}
+
+class GeneratedValueMapping extends DocumentMapping {
+    public static function mapFor()
+    {
+        return GenValueDocument::class;
+    }
+
+    public function map(Slick $builder)
+    {
+        $builder->string('id')->identifier()->generatedValue()->custom(new TestGenerator());
+    }
+
+}
+
+class TestGenerator extends AbstractIdGenerator {
+
+    protected $mailer;
+
+    public function __construct()
+    {
+        $this->mailer = App::make(Mailer::class);
+    }
+
+    public function getMailer()
+    {
+        return $this->mailer;
+    }
+
+    public function setMailer(Mailer $mailer)
+    {
+        $this->mailer = $mailer;
+
+        return $this;
+    }
+
+    public function generate(DocumentManager $dm, $document)
+    {
+        return 'test';
     }
 
 }
