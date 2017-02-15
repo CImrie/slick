@@ -11,6 +11,7 @@ use CImrie\Slick\SlickServiceProvider;
 use Doctrine\Common\Persistence\Mapping\ClassMetadata;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Doctrine\ODM\MongoDB\Id\AbstractIdGenerator;
+use Doctrine\ODM\MongoDB\Mapping\ClassMetadataInfo;
 use Illuminate\Mail\Mailer;
 use Illuminate\Support\Facades\App;
 use Tests\Model\Documents\Employee;
@@ -35,7 +36,7 @@ class SlickServiceProviderTest extends \TestCase
         ]);
         $this->app->make('config')->set('odm.managers.default.meta', SlickDriver::class);
 //        $this->app->make('config')->set('odm.metadata_drivers', [SlickDriver::class]);
-        $this->app->make('config')->set('odm.managers.default.mappings', [CustomMapping::class, ResolveableMapping::class, GeneratedValueMapping::class]);
+        $this->app->make('config')->set('odm.managers.default.mappings', [CustomMapping::class, ResolveableMapping::class, GeneratedValueMapping::class, InheritedUserMapping::class]);
         $this->app->register(SlickServiceProvider::class);
     }
 
@@ -76,6 +77,32 @@ class SlickServiceProviderTest extends \TestCase
         $this->assertInstanceOf(TestGenerator::class, $metadata->idGenerator);
         $this->assertInstanceOf(Mailer::class, $metadata->idGenerator->getMailer());
     }
+    
+    /**
+     * @test
+     */
+    public function mapping_for_inherited_documents_are_found_automatically()
+    {
+        $dm = $this->app->make(DocumentManager::class);
+        /** @var ClassMetadataInfo $metadata */
+        $metadata = $dm->getClassMetadata(InheritedUser::class);
+
+        $this->assertContains(User::class, $metadata->parentClasses);
+    }
+}
+
+class InheritedUser extends User {
+
+}
+
+class InheritedUserMapping extends DocumentMapping {
+    public static function mapFor()
+    {
+        return InheritedUser::class;
+    }
+
+    public function map(Slick $builder){}
+
 }
 
 class CustomMapping extends DocumentMapping {

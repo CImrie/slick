@@ -13,4 +13,9 @@ abstract class MappedSuperclassMapping extends AbstractMapping
         $builder->mappedSuperclass();
         return parent::map($builder);
     }
+
+    public function isTransient()
+    {
+        return false;
+    }
 }
