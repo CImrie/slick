@@ -232,6 +232,7 @@ class DocumentBuilderTest extends TestCase
         $this->builder->repository(CustomRepo::class);
         $this->assertEquals(CustomRepo::class, $this->metadata()->customRepositoryClassName);
     }
+
 }
 
 class ExampleDocumentListener

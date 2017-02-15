@@ -13,9 +13,4 @@ abstract class EmbeddedDocumentMapping extends AbstractMapping
         $builder->embedded();
         return parent::map($builder);
     }
-
-    public function isTransient()
-    {
-        return false;
-    }
 }
