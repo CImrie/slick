@@ -97,4 +97,8 @@ class Slick extends AbstractBuilder
 
         return $this;
     }
+
+    protected function metadata() {
+        return $this->metadataBuilder;
+    }
 }
