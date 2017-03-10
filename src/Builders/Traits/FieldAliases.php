@@ -126,7 +126,7 @@ trait FieldAliases
      */
     public function id($name = 'id')
     {
-        return $this->field($name)->type('id')->identifier();
+        return $this->field($name)->type('id')->column('_id')->identifier();
     }
 
     /**
