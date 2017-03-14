@@ -49,6 +49,48 @@ trait DefaultEmbedMappings
         return $this;
     }
 
+    public function useAddToSetStorageStrategy()
+    {
+        $this->embed->useAddToSetStorageStrategy();
+
+        return $this;
+    }
+
+    public function usePushAllStorageStrategy()
+    {
+        $this->embed->usePushAllStorageStrategy();
+
+        return $this;
+    }
+
+    public function useSetStorageStrategy()
+    {
+        $this->embed->useSetStorageStrategy();
+
+        return $this;
+    }
+
+    public function useSetArrayStorageStrategy()
+    {
+        $this->embed->useSetArrayStorageStrategy();
+
+        return $this;
+    }
+
+    public function useAtomicSetStorageStrategy()
+    {
+        $this->embed->useAtomicSetStorageStrategy();
+
+        return $this;
+    }
+
+    public function useAtomicSetArrayStorageStrategy()
+    {
+        $this->embed->useAtomicSetArrayStorageStrategy();
+
+        return $this;
+    }
+
     /**
      * @param $field
      * @return EmbedDiscriminatorBuilder | RelationDiscriminatorMapping
