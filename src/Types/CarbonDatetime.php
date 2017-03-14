@@ -17,7 +17,7 @@ class CarbonDatetime extends Type
 
     public function closureToPHP()
     {
-        return '$return = Carbon::createFromTimestampUTC($value);';
+        return '$return = \Carbon\Carbon::createFromTimestampUTC($value);';
     }
 
     public function convertToDatabaseValue($value)
