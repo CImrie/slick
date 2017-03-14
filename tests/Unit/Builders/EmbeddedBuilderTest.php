@@ -59,4 +59,88 @@ class EmbeddedBuilderTest extends TestCase
 
         $this->assertEquals(User::class, $this->metadata()->fieldMappings['users']['targetDocument']);
     }
+
+    /**
+     * @test
+     */
+    public function can_store_with_add_to_set_strategy()
+    {
+        $this->builder->many(User::class)
+            ->field('users')
+            ->useAddToSetStorageStrategy();
+
+        $this->builder->build();
+
+        $this->assertEquals('addToSet', $this->metadata()->fieldMappings['users']['strategy']);
+    }
+
+    /**
+     * @test
+     */
+    public function can_store_with_push_all_strategy()
+    {
+        $this->builder->many(User::class)
+            ->field('users')
+            ->usePushAllStorageStrategy();
+
+        $this->builder->build();
+
+        $this->assertEquals('pushAll', $this->metadata()->fieldMappings['users']['strategy']);
+    }
+
+    /**
+     * @test
+     */
+    public function can_store_with_set_strategy()
+    {
+        $this->builder->many(User::class)
+            ->field('users')
+            ->useSetStorageStrategy();
+
+        $this->builder->build();
+
+        $this->assertEquals('set', $this->metadata()->fieldMappings['users']['strategy']);
+    }
+
+    /**
+     * @test
+     */
+    public function can_store_with_set_array_strategy()
+    {
+        $this->builder->many(User::class)
+            ->field('users')
+            ->useSetArrayStorageStrategy();
+
+        $this->builder->build();
+
+        $this->assertEquals('setArray', $this->metadata()->fieldMappings['users']['strategy']);
+    }
+
+    /**
+     * @test
+     */
+    public function can_store_with_atomic_set_strategy()
+    {
+        $this->builder->many(User::class)
+            ->field('users')
+            ->useAtomicSetStorageStrategy();
+
+        $this->builder->build();
+
+        $this->assertEquals('atomicSet', $this->metadata()->fieldMappings['users']['strategy']);
+    }
+
+    /**
+     * @test
+     */
+    public function can_store_with_atomic_set_array_strategy()
+    {
+        $this->builder->many(User::class)
+            ->field('users')
+            ->useAtomicSetArrayStorageStrategy();
+
+        $this->builder->build();
+
+        $this->assertEquals('atomicSetArray', $this->metadata()->fieldMappings['users']['strategy']);
+    }
 }
