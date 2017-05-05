@@ -7,6 +7,7 @@ namespace CImrie\Slick\Builders;
 use CImrie\Slick\Builders\Embedded\Many;
 use CImrie\Slick\Builders\Embedded\One;
 use CImrie\Slick\Builders\Traits\DecoratedBuilderHelpers;
+use CImrie\Slick\Builders\Traits\DefaultEmbedMappings;
 
 class EmbedBuilder extends AbstractBuilder
 {
@@ -14,7 +15,7 @@ class EmbedBuilder extends AbstractBuilder
 
     /**
      * @param $target
-     * @return One | Builder
+     * @return One | Builder | DefaultEmbedMappings
      */
     public function one($target)
     {
@@ -25,7 +26,7 @@ class EmbedBuilder extends AbstractBuilder
 
     /**
      * @param $target
-     * @return Many | Builder
+     * @return Many | Builder | DefaultEmbedMappings
      */
     public function many($target)
     {
