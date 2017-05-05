@@ -49,6 +49,9 @@ trait DefaultEmbedMappings
         return $this;
     }
 
+    /**
+     * @return $this
+     */
     public function useAddToSetStorageStrategy()
     {
         $this->embed->useAddToSetStorageStrategy();
@@ -56,6 +59,9 @@ trait DefaultEmbedMappings
         return $this;
     }
 
+    /**
+     * @return $this
+     */
     public function usePushAllStorageStrategy()
     {
         $this->embed->usePushAllStorageStrategy();
@@ -63,6 +69,9 @@ trait DefaultEmbedMappings
         return $this;
     }
 
+    /**
+     * @return $this
+     */
     public function useSetStorageStrategy()
     {
         $this->embed->useSetStorageStrategy();
@@ -70,6 +79,9 @@ trait DefaultEmbedMappings
         return $this;
     }
 
+    /**
+     * @return $this
+     */
     public function useSetArrayStorageStrategy()
     {
         $this->embed->useSetArrayStorageStrategy();
@@ -77,6 +89,9 @@ trait DefaultEmbedMappings
         return $this;
     }
 
+    /**
+     * @return $this
+     */
     public function useAtomicSetStorageStrategy()
     {
         $this->embed->useAtomicSetStorageStrategy();
@@ -84,6 +99,9 @@ trait DefaultEmbedMappings
         return $this;
     }
 
+    /**
+     * @return $this
+     */
     public function useAtomicSetArrayStorageStrategy()
     {
         $this->embed->useAtomicSetArrayStorageStrategy();
